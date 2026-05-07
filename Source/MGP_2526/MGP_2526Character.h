@@ -23,6 +23,22 @@ class AMGP_2526Character : public ACharacter
 {
 	GENERATED_BODY()
 
+	/** Speed when walking */
+	UPROPERTY(EditAnywhere, Category="Movement")
+	float WalkSpeed = 500.f;
+
+	/** Speed when running */
+	UPROPERTY(EditAnywhere, Category="Movement")
+	float RunSpeed = 900.f;
+
+	/** Speed when crouching */
+	UPROPERTY(EditAnywhere, Category="Movement")
+	float CrouchSpeed = 250.f;
+
+	/** Whether the character is currently crouching */
+	UPROPERTY(VisibleAnywhere, Category="Movement")
+	bool bIsCrouching = false;
+
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
 	USpringArmComponent* CameraBoom;
@@ -49,6 +65,14 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* MouseLookAction;
 
+	/** Crouch Input Action */
+	UPROPERTY(EditAnywhere, Category="Input")
+	UInputAction* CrouchAction;
+
+	/** Run Input Action */
+	UPROPERTY(EditAnywhere, Category="Input")
+	UInputAction* RunAction;
+
 public:
 
 	/** Constructor */
@@ -66,6 +90,13 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
+
+	// Called for when crouch is toggled
+	void StartCrouch(const FInputActionValue& Value);
+
+	// Called for when run is pressed or released
+	void StartRun(const FInputActionValue& Value);
+	void StopRun(const FInputActionValue& Value);
 
 public:
 
