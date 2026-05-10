@@ -65,6 +65,13 @@ void AMGP_2526Character::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AMGP_2526Character::Look);
+
+		// Crouching
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this, &AMGP_2526Character::StartCrouch);
+
+		// Running
+		EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Started, this, &AMGP_2526Character::StartRun);
+		EnhancedInputComponent->BindAction(RunAction, ETriggerEvent::Completed, this, &AMGP_2526Character::StopRun);
 	}
 	else
 	{
@@ -131,3 +138,37 @@ void AMGP_2526Character::DoJumpEnd()
 	// signal the character to stop jumping
 	StopJumping();
 }
+
+void AMGP_2526Character::StartCrouch(const FInputActionValue& Value)
+{
+	if (bIsCrouching)
+	{
+		bIsCrouching = false;
+		GetCharacterMovement()->MaxWalkSpeed = WalkSpeed; // Reset to default walk speed
+	}
+	else
+	{
+		bIsCrouching = true;
+		GetCharacterMovement()->MaxWalkSpeed = CrouchSpeed; // Set to crouch speed
+	}
+}
+
+void AMGP_2526Character::StartRun(const FInputActionValue& Value)
+{
+	if (!bIsCrouching) // Only allow running if not crouching
+	{
+		bIsRunning = true;
+		GetCharacterMovement()->MaxWalkSpeed = RunSpeed; // Set to run speed
+	}
+}
+
+void AMGP_2526Character::StopRun(const FInputActionValue& Value)
+{
+	if (!bIsCrouching) // Only allow stopping run if not crouching
+	{
+		bIsRunning = false;
+		GetCharacterMovement()->MaxWalkSpeed = WalkSpeed; // Reset to default walk speed
+	}
+}
+
+
