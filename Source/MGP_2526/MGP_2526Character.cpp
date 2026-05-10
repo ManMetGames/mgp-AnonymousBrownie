@@ -157,6 +157,7 @@ void AMGP_2526Character::StartRun(const FInputActionValue& Value)
 {
 	if (!bIsCrouching) // Only allow running if not crouching
 	{
+		bIsRunning = true;
 		GetCharacterMovement()->MaxWalkSpeed = RunSpeed; // Set to run speed
 	}
 }
@@ -165,6 +166,7 @@ void AMGP_2526Character::StopRun(const FInputActionValue& Value)
 {
 	if (!bIsCrouching) // Only allow stopping run if not crouching
 	{
+		bIsRunning = false;
 		GetCharacterMovement()->MaxWalkSpeed = WalkSpeed; // Reset to default walk speed
 	}
 }

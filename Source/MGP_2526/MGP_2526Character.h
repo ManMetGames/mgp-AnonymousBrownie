@@ -35,10 +35,6 @@ class AMGP_2526Character : public ACharacter
 	UPROPERTY(EditAnywhere, Category="Movement")
 	float CrouchSpeed = 250.f;
 
-	/** Whether the character is currently crouching */
-	UPROPERTY(VisibleAnywhere, Category="Movement")
-	bool bIsCrouching = false;
-
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components", meta = (AllowPrivateAccess = "true"))
 	USpringArmComponent* CameraBoom;
@@ -115,6 +111,14 @@ public:
 	/** Handles jump pressed inputs from either controls or UI interfaces */
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoJumpEnd();
+	
+	/** Whether the character is currently crouching */
+	UPROPERTY(VisibleAnywhere, Category="Movement")
+	bool bIsCrouching = false;
+
+	/** Whether the character is currently running */
+	UPROPERTY(VisibleAnywhere, Category="Movement")
+	bool bIsRunning = false;
 
 public:
 
